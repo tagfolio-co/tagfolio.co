@@ -1,0 +1,140 @@
+@import url(https://fonts.googleapis.com/css2?family=Raleway:wght@500;700;900&family=Roboto:wght@500;700;900&display=swap);
+
+$raleway: 'Raleway', sans-serif;
+
+
+
+$mint: #78D5D7;
+
+
+*{
+  font-family: $raleway;
+  box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+div{
+    box-sizing: border-box;
+}
+
+
+/*
+################
+HOME
+################
+*/
+
+#Home{
+    min-height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: center;
+    
+
+    #Intro{
+        width:100%;
+        padding:100px 30px 50px 30px;
+        background-color: $mint;
+        color:white;
+
+        #callToAction{
+            width: 530px;
+            margin:auto;
+            //outline:1px solid red;
+
+            h1{
+                font-style: normal;
+                font-weight: 900;
+                font-size: 70px;
+                line-height: 70px;
+                margin:0;
+                margin-bottom:70px;
+            }
+
+            h2{
+                text-align: center;
+                margin:auto;
+                font-size: 30px;
+            }
+
+        }
+
+    }
+}
+    
+
+
+#Portfolio {
+    #Intro{
+        width:100%;
+        padding:100px 30px 50px 30px;
+        background-color: $mint;
+        color:white;
+    }
+
+    .Repos{
+      display: flex;
+      flex-flow: column nowrap;
+      margin: auto;
+
+
+      .TagWrapper{
+        background-color: $mint;
+        width: 100%;
+        
+        .Tags{
+          margin: 10px auto;
+          max-width: 1000px;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: center;
+          
+          .Tag{
+            cursor: pointer;
+            color:white;
+            padding: 4px 10px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 12px;
+            margin:5px;
+            text-align: center;
+          }
+
+          .Tag[highlight=true]{
+            color:#626262;
+            background-color:white;
+          }
+        }
+      }
+    
+
+
+    .RepoWrapper{
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      max-width: 1000px;
+      width: 100%;
+      margin: 10px auto;
+
+      .repo{
+        background-color: #F5F5F5;
+        width: calc(50% - 20px);
+        height: 217px;
+        margin:10px;
+        padding:20px;
+      }
+
+      .repo[shown=false]{
+        display: none;
+      }
+    }
+    
+    
+    }
+
+}
