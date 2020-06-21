@@ -1,11 +1,15 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:wght@500;700;900&family=Roboto:wght@500;700;900&display=swap);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 $raleway: 'Raleway', sans-serif;
 
 
-
+$grey: #626262;
 $mint: #78D5D7;
-
+$shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+$shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+$shadow-hover: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+$shadow-transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
 *{
   font-family: $raleway;
@@ -16,7 +20,7 @@ body{
     margin: 0;
 }
 
-div{
+*{
     box-sizing: border-box;
 }
 
@@ -33,7 +37,6 @@ HOME
     flex-flow: column nowrap;
     justify-content: start;
     align-items: center;
-    
 
     #Intro{
         width:100%;
@@ -42,17 +45,26 @@ HOME
         color:white;
 
         #callToAction{
-            width: 530px;
+            width: 100%;
+            max-width: 530px;
             margin:auto;
             //outline:1px solid red;
 
+            
             h1{
-                font-style: normal;
-                font-weight: 900;
-                font-size: 70px;
-                line-height: 70px;
-                margin:0;
-                margin-bottom:70px;
+              font-style: normal;
+              font-weight: 900;
+              font-size: 70px;
+              line-height: 70px;
+              margin:0;
+              margin-bottom:70px;
+            }
+            
+            @media only screen and (max-width: 750px) {
+              h1{
+                line-height: 50px;
+                font-size: 50px;
+              }
             }
 
             h2{
@@ -64,16 +76,114 @@ HOME
         }
 
     }
+
+    #Search{
+      max-width: 530px;
+      width:100%;
+      padding: 30px 20px;
+      display: flex;
+      margin:50px 0 80px 0;
+
+      *{
+        margin:5px;
+      }
+
+      input{
+        border:none;
+        background: #F5F5F5;
+        box-shadow: $shadow;
+        border-radius: 5px;
+        font-size: 24px;
+        padding: 10px;
+        flex-grow: 1;
+      }
+
+      a{
+        background: $mint;
+        padding:10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        text-decoration: none;
+        color:white;
+        box-shadow: $shadow;
+        //border:4px solid $mint;
+        transition: $shadow-transition;
+      }
+
+      a:hover{
+        //border-color: white;
+        box-shadow: $shadow-hover;
+      }
+
+    }
+
+    #Docs{
+      padding:20px;
+
+
+      p{
+        margin-bottom: 80px;
+      }
+    }
 }
     
+
+
+
+
+
+
+
+.Tag{
+  all:unset;
+  color:white !important;
+  //background-color: $mint;
+  padding: 4px 10px;
+  font-weight: bold !important;
+  font-size: 16px;
+  border-radius: 12px;
+  margin:5px;
+  text-align: center;
+}
+
 
 
 #Portfolio {
     #Intro{
         width:100%;
-        padding:100px 30px 50px 30px;
+        padding:50px 30px 70px 30px;
         background-color: $mint;
         color:white;
+
+        div{
+          margin: 10px auto;
+          max-width: 1000px;
+
+          #name{
+            font-size: 60px;
+            margin:0;
+          }
+          #bio{
+            font-size: 20px;
+            margin:5px;
+            margin-bottom: 20px;
+          }
+          a{
+            background: white;
+            padding:10px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            text-decoration: none;
+            color:$grey;
+            box-shadow: $shadow;
+            margin:5px;
+            transition: $shadow-transition;
+          }
+        }
     }
 
     .Repos{
@@ -84,6 +194,7 @@ HOME
 
       .TagWrapper{
         background-color: $mint;
+        //background-color: #B0E7E8;
         width: 100%;
         
         .Tags{
@@ -91,21 +202,15 @@ HOME
           max-width: 1000px;
           display: flex;
           flex-flow: row wrap;
-          justify-content: center;
-          
+          justify-content: start;
+
           .Tag{
             cursor: pointer;
-            color:white;
-            padding: 4px 10px;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 12px;
-            margin:5px;
-            text-align: center;
           }
+          
 
           .Tag[highlight=true]{
-            color:#626262;
+            color:#626262 !important;
             background-color:white;
           }
         }
@@ -120,15 +225,61 @@ HOME
       max-width: 1000px;
       width: 100%;
       margin: 10px auto;
-
-      .repo{
-        background-color: #F5F5F5;
-        width: calc(50% - 20px);
-        height: 217px;
-        margin:10px;
-        padding:20px;
+      padding:0;
+      
+      @media only screen and (max-width: 650px) {
+        .repo{
+          width: calc(100% - 20px) !important;
+        }
       }
 
+
+      .repo{
+        all:unset;
+        background-color: #F5F5F5;
+        box-sizing: border-box;
+        width: calc(50% - 20px);
+        min-height: 200px;
+        margin: 10px;
+        cursor: pointer;
+        padding:20px;
+        position: relative;
+        
+        div{
+          display: flex;
+          flex-flow: column nowrap;
+          
+          h3{
+            font-weight: bold;
+            font-size: 24px;
+            margin:0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          
+          p{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            color: #626262;
+          }
+          
+          .tags{
+            display: flex;
+            flex-flow: row wrap;
+            
+            p { 
+              color:$mint !important;
+              background-color: rgba(0,0,0,0);
+              font-weight: bold;
+              margin:5px 10px;
+              margin-left: 0;
+            }
+          }
+        }
+
+      }
+      
       .repo[shown=false]{
         display: none;
       }

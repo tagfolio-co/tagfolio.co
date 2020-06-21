@@ -1,4 +1,6 @@
 import React from 'react'
+import RepoAPI from '../APIJson/repos.json'
+//import RepoAPI from '../APIJson/reposJosh.json'
 
 export class Repos extends React.Component{
     constructor(props){
@@ -43,7 +45,10 @@ export class Repos extends React.Component{
     
     async componentDidMount(){
         let api = 'https://api.github.com/users/'+this.props.github+'/repos?sort=created'
-        //api = './repos.json'
+        
+        // use this for dev
+        // let repos = RepoAPI
+        
         let repos = await this.getRepos(api)
 
         let reposToDisplay = []
@@ -56,6 +61,7 @@ export class Repos extends React.Component{
             let repo = repos[i]
             let name = repo['name']
             let desc = repo['description']
+            let lang = repo['language']
             let url = repo['html_url']
 
             // only show repos with descriptions
@@ -66,28 +72,45 @@ export class Repos extends React.Component{
             let exclude = desc.substring(descLen - 3).toLowerCase() === '[x]'
             if (exclude) continue
             
-            // save the repo info to display later
-            reposToDisplay[name] = [desc,url]
-            
             // check to see if the repo has any tags
-            let tags = desc.match(/#\S+/g)
+            let tags = desc.match(/#\S+/g) || []
+            let thisTagList = []
 
-            if (tags){
+            // make sure there will be tags to associate
+            if (tags || lang){
+                // add lang to tags
+                tags.push('#' + lang)
+                
                 tags.map(tag => {
-                    // tag.substr(1) removes the #
-                    // error thrown for tag = tag.substr(1) so RIP DRY
+                    // remove '#'
+                    tag = tag.slice(1)
+                        
+                    // tag consistency
+                    switch(tag.toUpperCase()){
+                        case 'JS': tag = 'JavaScript';
+                        case 'HTML': tag = 'HTML';
+                        case 'CSS': tag = 'CSS';
+                    }
 
-                    // add the tag if it doesn't exist
-                    (!tagList[tag.substr(1)]) && (tagList[tag.substr(1)] = [])
+                    tag = tag.charAt(0).toUpperCase() + tag.slice(1)
+                    
+                    if (tag.toUpperCase() !== 'NULL'){
 
-                    // associate the repo with it's tags
-                    tagList[tag.substr(1)].push(name)
+                        // add the tag if it doesn't exist
+                        !tagList[tag] && (tagList[tag] = [])
+                        !thisTagList.includes(tag) && (thisTagList.push(tag))
+                        
+                        // associate the repo with it's tags
+                        tagList[tag].push(name)
+                    }
                     return null
                 })
-            } else {
-                 console.log('It looks like',name,'doesn\'t have any tags!')
             }
+
+            // save the repo info to display later
+            reposToDisplay[name] = [desc, url, thisTagList]
         }
+
 
         this.setState({
             repos:reposToDisplay,
@@ -105,20 +128,26 @@ function RepoList(props){
     let repoList = Object.keys(props.repos).map(
         (name,i) => {
             let repos = props.repos
-            let [desc,url] = repos[name]
+            let [desc,url,tagList] = repos[name]
 
-            // show all tags
-            let shown = 'true'
 
-            if (props.visableRepos !== undefined){
-                // is this repo tagged with the currently selected tag?
-                shown = props.visableRepos.includes(name) ? 'true' : 'false'
-            }
+            tagList = tagList.map((tag, i) => <p key={i}>#{tag}</p>)
+
+            let shown = props.visableRepos === undefined 
+                ? 'true' 
+                : props.visableRepos.includes(name) 
+                    ? 'true' 
+                    : 'false'
+            
+            
             return (
                 <a href={url} className='repo' shown={shown} key={name+'-'+i}>
                 <div>
                     <h3>{name}</h3>
                     <p>{desc}</p>
+                    <div className='tags'>
+                        {tagList}
+                    </div>
                 </div>
                 </a>
             )
