@@ -2,10 +2,10 @@
 [Tagfolio.co](http://tagfolio.co) is a digital platform that uses your GitHub projects to instantly build you a development portfolio.
 
 
-![Home Page](URL HERE)
+![Home Page](https://raw.githubusercontent.com/tagfolio-co/tagfolio.co/master/homePage.png)
 
 
-![Example Portfolio](URL HERE)
+![Example Portfolio](https://raw.githubusercontent.com/tagfolio-co/tagfolio.co/master/portfolio.png)
 
 
 Here is an [example](http://tagfolio.co/?kid-on-github) of this in action.
